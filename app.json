@@ -1,0 +1,16 @@
+{
+  "name": "MTProto 仅可用于 Telegram",
+  "description": "Deploy MTProto on Heroku.",
+  "keywords": [
+    "vless"
+  ],
+  "env": {
+    "SECRET": {
+      "description": "MTProto secret",
+      "value": "ee788eabf5aae8fa02c7253c0701dffa9262696c6962696c692e636f6d"
+    }
+  },
+  "website": "",
+  "repository": "https://github.com/attackoo/mtg.git",
+  "stack": "container"
+}
