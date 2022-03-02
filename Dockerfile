@@ -24,7 +24,7 @@ RUN set -x \
 FROM scratch
 
 ENTRYPOINT ["/mtg"]
-CMD ["run", "/config.toml"]
+CMD ["simple-run", "0.0.0.0:443", "ee788eabf5aae8fa02c7253c0701dffa9262696c6962696c692e636f6d"]
 
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=build /app/mtg /mtg
