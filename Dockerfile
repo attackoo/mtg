@@ -1,7 +1,31 @@
-FROM alpine:latest
+###############################################################################
+# BUILD STAGE
 
-RUN apk add --no-cache --virtual .build-deps git
+FROM golang:1.17-alpine AS build
 
-ADD configure.sh /configure.sh
-RUN chmod +x /configure.sh
-CMD /configure.sh
+RUN set -x \
+  && apk --no-cache --update add \
+    bash \
+    ca-certificates \
+    curl \
+    git \
+    make
+
+COPY . /app
+WORKDIR /app
+
+RUN set -x \
+  && make -j 4 static
+
+
+###############################################################################
+# PACKAGE STAGE
+
+FROM scratch
+
+ENTRYPOINT ["/mtg"]
+CMD ["run", "/config.toml"]
+
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=build /app/mtg /mtg
+COPY --from=build /app/example.config.toml /config.toml
